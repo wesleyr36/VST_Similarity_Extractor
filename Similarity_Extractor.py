@@ -4,12 +4,11 @@ from pedalboard.io import AudioFile
 import numpy as np
 import librosa
 import os
-import argparse
 from pathlib import Path
 import soundfile as sf
 
 
-plugin_name = r"Bertom_PhantomCenter.vst3\Contents\x86_64-win\Bertom_PhantomCenter.vst3"
+plugin_name = r"Bertom_PhantomCenter.vst3"
 
 def similarity_difference_extractor(file_input_1, file_input_2, difference, output_name):
     #load inputs
@@ -92,18 +91,3 @@ def similarity_difference_extractor(file_input_1, file_input_2, difference, outp
     #output similarities
     sf.write(f"{outpath_1}-similarities.wav", similarity, samplerate, 'float')
 
-def main():
-    print('Initializing Inference Process..')
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-i_1', '--input_1', default=None, type=str, required = True)
-    parser.add_argument('-i_2', '--input_2', default=None, type=str, required = True)
-    parser.add_argument('-d', '--difference', action='store_true')
-    parser.add_argument('-o_n', '--output_name', default=None, type=str)
-
-    a = parser.parse_args()
-
-    similarity_difference_extractor(a)
-
-if __name__ == '__main__':
-    main()
