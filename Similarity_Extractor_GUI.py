@@ -7,9 +7,9 @@ import random as rdm
 
 from Similarity_Extractor import similarity_difference_extractor as similarity_extractor
 
-global file_1, file_2, difference
+global file_1, file_2, difference, sim_of_dif
 
-file_1, file_2, difference = None, None, False
+file_1, file_2, difference, sim_of_dif = None, None, False, False
 
 def create_label(win, text_align, set_text, style, size_xy, xy):
     label = QLabel(win)
@@ -69,30 +69,43 @@ def difference_toggle(win, label, differenc):
         label.setText("False")
         difference = False
 
-def run_similarity_extractor(input_1, input_2, difference, output_name):
-    if not None in [input_1, input_2]:
-        if output_name.lower() != "optional":
-            similarity_extractor(input_1, input_2, difference, output_name)
-        else:
-            similarity_extractor(input_1, input_2, difference, None)
-
-        done = QMessageBox.information(None,
-                                  "Processing Finished",
-                                  "Your files have been processed, please check the folder containing input 1.",
-                                  QMessageBox.Ok)
-        if done == QMessageBox.Ok:
-            return
-
+def sim_of_dif_toggle(win, label, sim_of_di):
+    global sim_of_dif
+    if sim_of_di == False:
+        label.setText("True")
+        sim_of_dif = True
     else:
-        choice = QMessageBox.critical(None,
-                                  "Error: No Inputs",
-                                  "Please make sure you have selected both input files!",
-                                  QMessageBox.Retry | QMessageBox.Cancel)
-        if choice == QMessageBox.Retry:
-            return
-        else:
-            print("Cancel")
-            exit()
+        label.setText("False")
+        sim_of_dif = False
+
+
+def run_similarity_extractor(input_1, input_2, difference, output_name, sim_of_dif):
+    if not None in [input_1, input_2]:
+        try:
+            if output_name.lower() != "optional":
+                similarity_extractor(input_1, input_2, difference, output_name, sim_of_dif)
+            else:
+                similarity_extractor(input_1, input_2, difference, None, sim_of_dif)
+
+            done = QMessageBox.information(None,
+                                      "Processing Finished",
+                                      "Your files have been processed, please check the folder containing input 1.",
+                                      QMessageBox.Ok)
+            if done == QMessageBox.Ok:
+                return
+
+            else:
+                choice = QMessageBox.critical(None,
+                                          "Error: No Inputs",
+                                          "Please make sure you have selected both input files!",
+                                          QMessageBox.Retry | QMessageBox.Cancel)
+                if choice == QMessageBox.Retry:
+                    return
+                else:
+                    print("Cancel")
+                    exit()
+        except Exception as e:
+            print(e)
 
 def window():
     app = QApplication(sys.argv)
@@ -115,14 +128,18 @@ def window():
     difference_label = create_label(win, 'Centre', "Output Differences?", "color : white; background-color : black", [190, 40], [50, 170])
     output_name_label = create_label(win, 'Centre', "Output File Name", "color : white; background-color : black", [190, 40], [350, 170])
     
-    #Input Selection Buttons
+    #Difference and Name Fields
     difference_button = create_button(win, "False", "color : white; background-color : grey", [190, 40], [50, 220], lambda:difference_toggle(win, difference_button, difference))
     output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [190, 40], [350, 220])
 
-    #Run Similarity Extraction Button
-    similarity_button = create_button(win, "Extract Similarity", "color : white; background-color : grey", [490, 40], [50, 270], lambda:run_similarity_extractor(file_1, file_2, difference, output_name_input.text()))
+    #Similarity of Differences
+    sim_of_dif_label = create_label(win, 'Centre', "Output Similarity of inverted Differences?\n(some similarities can be phase inverted)", "color : white; background-color : black", [290, 40], [152, 270])
+    sim_of_dif_button = create_button(win, "False", "color : white; background-color : grey", [190, 40], [203, 320], lambda:sim_of_dif_toggle(win, sim_of_dif_button, sim_of_dif))
     
-    win.setFixedSize(590,360)
+    #Run Similarity Extraction Button
+    similarity_button = create_button(win, "Extract Similarity", "color : white; background-color : grey", [490, 40], [50, 370], lambda:run_similarity_extractor(file_1, file_2, difference, output_name_input.text(), sim_of_dif))
+    
+    win.setFixedSize(590,460)
     win.setWindowTitle("Similarity Extractor GUI")
     win.show()
     sys.exit(app.exec_())

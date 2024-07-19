@@ -10,7 +10,7 @@ import soundfile as sf
 
 plugin_name = r"Bertom_PhantomCenter.vst3"
 
-def similarity_difference_extractor(file_input_1, file_input_2, difference, output_name):
+def similarity_difference_extractor(file_input_1, file_input_2, difference, output_name, double):
     #load inputs
     input_1, samplerate = librosa.load(file_input_1, 44100, mono=False)
     input_2, samplerate_2 = librosa.load(file_input_2, 44100, mono=False)
@@ -43,7 +43,7 @@ def similarity_difference_extractor(file_input_1, file_input_2, difference, outp
     inputs_L_wav_buffer = io.BytesIO(AudioFile.encode(inputs_L, samplerate, "wav", 2, 32))
     inputs_R_wav_buffer = io.BytesIO(AudioFile.encode(inputs_R, samplerate, "wav", 2, 32))
 
-    if difference == True:
+    if difference == True or double == True:
         #side isolation
         plugin = load_plugin(plugin_name, parameter_values = {'hpf': 'Off', 'lpf': 'Off', 'mix': -100, 'output': 0.0, 'bypass': 'Normal'})
         assert plugin.is_effect
@@ -72,13 +72,52 @@ def similarity_difference_extractor(file_input_1, file_input_2, difference, outp
 
     #finalise similarities
     similarity = np.stack([librosa.to_mono(similarity_L), librosa.to_mono(similarity_R)], axis=1)
-
+    
     #output paths
     if output_name is not None:
         outpath_1 = os.path.join(os.path.dirname(file_input_1), output_name)
     else:
         outpath_1 = os.path.join(os.path.dirname(file_input_1), Path(file_input_1).stem)
         outpath_2 = os.path.join(os.path.dirname(file_input_1), Path(file_input_2).stem)
+
+    if double == True:
+        input_1_differences =  np.stack([-differences_L[0], -differences_R[0]], axis=0)
+        input_2_differences =  np.stack([differences_L[1], differences_R[1]], axis=0)
+        
+        #sometimes some similarites are phase-inverted
+        differences_Ls =  np.stack([input_1_differences[0], input_2_differences[0]], axis=0)
+        differences_Rs =  np.stack([input_1_differences[1], input_2_differences[1]], axis=0)
+        
+        differences_Ls_wav_buffer = io.BytesIO(AudioFile.encode(differences_Ls, samplerate, "wav", 2, 32))
+        differences_Rs_wav_buffer = io.BytesIO(AudioFile.encode(differences_Rs, samplerate, "wav", 2, 32))
+
+        #separate similarities of differences
+        with AudioFile(differences_Ls_wav_buffer) as f:
+            similarity_differences_Ls = plugin(f.read(f.frames), samplerate)
+            
+        with AudioFile(differences_Rs_wav_buffer) as f:
+            similarity_differences_Rs = plugin(f.read(f.frames), samplerate)
+        
+        #finalise similarities of differences
+        similarity_differences = np.stack([librosa.to_mono(similarity_differences_Ls), librosa.to_mono(similarity_differences_Rs)], axis=1)
+        if output_name is None:
+            #output similarity differences
+            sf.write(f"{outpath_1}-differences_similarity.wav", -similarity_differences, samplerate, 'float')            
+            sf.write(f"{outpath_2}-differences_similarity.wav", similarity_differences, samplerate, 'float')
+        else:
+            sf.write(f"{outpath_1}-differences_similarity_1.wav", -similarity_differences, samplerate, 'float')            
+            sf.write(f"{outpath_1}-differences_similarity_2.wav", similarity_differences, samplerate, 'float')
+
+        #remove similarity of differences
+        input_1_differences = np.stack([
+            differences_Ls[0] - similarity_differences_Ls[0],
+            differences_Rs[0] - similarity_differences_Rs[0]
+        ], axis=1)
+
+        input_2_differences = np.stack([
+            differences_Ls[1] - similarity_differences_Ls[1],
+            differences_Rs[1] - similarity_differences_Rs[1]
+        ], axis=1)
 
     if difference == True and output_name is None:
         #output differences
@@ -87,6 +126,7 @@ def similarity_difference_extractor(file_input_1, file_input_2, difference, outp
     else:
         sf.write(f"{outpath_1}-differences_1.wav", input_1_differences, samplerate, 'float')            
         sf.write(f"{outpath_1}-differences_2.wav", input_2_differences, samplerate, 'float')
+    
 
     #output similarities
     sf.write(f"{outpath_1}-similarities.wav", similarity, samplerate, 'float')
