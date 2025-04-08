@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Similarity Extractor Installation Guide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="../Help_Guide.html">
+            <img src="home-icon.png" alt="Home" style="width:50px;height:47px;">
+        </a>
+        <h1>Similarity Extractor Installation Guide</h1>
+    </header>
+    <main>
+        <h2>Setup Steps</h2>
+        <p>Now that you have installed Python and the Similarity Extractor, you can proceed with the setup.
+            <br>This guide will help you configure the Similarity Extractor for your system.
+            <br>Whilst it is only required to set up one of the algorithms, it is recommended to set up all of them.
+            <br>Each algorithm has its own setup steps, which are outlined below.</p>
+        <div class="installation-steps">
+            <!-- Bertom Phantom Centre -->
+            <h2> <u>Algorithm 1: Bertom Phantom Centre</u></h2>
+            <ol>
+                <li>Download the latest version of the Bertom Phantom Centre VST from the <a href="https://www.bertomaudio.com/phantom-center.html">official website</a>.</li>
+                    <ol type="a">
+                        <li>For legal reasons, we cannot bundle this plugin with the Similarity Extractor.</li>
+                        <li>However, it is a free plugin and can be downloaded from the official website.</li>
+                        <li>Ensure you download the correct version for your operating system (Windows or Mac).</li>
+                        <li>If you are using Linux, you will need to use a virtual machine or setup Wine.</li>
+                        <li>This is because pedalboard, which is used to run the VST, does not support Linux VSTs.</li>
+                    </ol>
+                <li>Open the Similarity Extractor GUI.</li>
+                <li>Create a folder ideally in the Similarity Extractor folder.</li>
+                    <ol type="a">
+                        <li>It is recommended to name this folder "models" as it will be used to store the models for the Similarity Extractor.</li>
+                    </ol>
+                <li>Place the downloaded VST file in the folder you created.</li>
+                    <ol type="a">
+                        <li>This will allow the Similarity Extractor to access the VST file.</li>
+                    </ol>
+                <li>Click on the "⚙Options⚙" tab in the top menu.</li>
+                <li>Click the button labeled "Select Model Directory" and select the folder you created in step 3.</li>
+                    <ol type="a">
+                        <li>This will set the model directory for the Similarity Extractor.</li>
+                        <li>This folder will be used to store the models for all the algorithms.</li>
+                        <li>Once you have selected the folder, the label above the button will change to show the selected folder.</li>
+                        <li>If you do not see the label change, try clicking the button again.</li>
+                    </ol>
+                <li>Your model directory is now set up.</li>
+                    <ol type="a">
+                        <li>It will have been saved to the config file in the Similarity Extractor folder.</li>
+                        <li>You can change this at any time by clicking the "Select Model Directory" button again.</li>
+                    </ol>
+                <li>You can now use the Similarity Extractor with the Bertom Phantom Centre algorithm.</li>
+            </ol>
+            <br>
+            <!-- MDX23C -->
+            <h2> <u>Algorithm 2: MDX23C</u> </h2>
+            <ol>
+                <li>Download and install ZFTurbo's Music Source Separation Training repository.</li> 
+                    <ol type="a">
+                        <li>Like the Similarity Extractor, it is installed by downloading the repository from <a href="https://github.com/ZFTurbo/Music-Source-Separation-Training">GitHub</a>.</li>
+                        <li>Once downloaded, unzip the file to your desired location.</li>
+                        <li>It is recommended to unzip it to the same location as the Similarity Extractor.</li>
+                        <li>This will make it easier to find the files later.</li>
+                        <li>Once unzipped, open a terminal and navigate to the unzipped folder.</li>
+                            <ol type="i">
+                                <li>Use the <code>cd</code> command to change directories. For example, if you unzipped it to your Desktop, type:</li>
+                                    <ol type="i">
+                                        <li>For Windows: <code>cd Desktop\Music-Source-Separation</code></li>
+                                        <li>For Mac/Linux: <code>cd ~/Desktop/Music-Source-Separation</code></li>
+                                    </ol>
+                                <li>Press Enter.</li>
+                            </ol>
+                    </ol>
+                <li>Install the required dependencies by running the following command:</li>
+                    <ol type="a">
+                        <li><code>pip install -r requirements.txt</code></li>
+                        <li>This will install all the necessary libraries for the repository to function properly.</li>
+                    </ol>
+                <li>Once the installation is complete, you can verify the installation by running the following command:</li>
+                    <ol type="a">
+                        <li><code>python inference.py --help</code></li>
+                        <li>This will show you the available options for the repository.</li>
+                        <li>If you see the options, the installation was successful.</li>
+                    </ol>
+                <li>Create a folder ideally in the Similarity Extractor folder.</li>
+                    <ol type="a">
+                        <li>If you have already created a folder for the Bertom Phantom Centre skip to step 5.</li>
+                        <li>It is recommended to name this folder "models" as it will be used to store the models for the Similarity Extractor.</li>
+                    </ol>
+                <li>Download the MDX23C model and config files <a href="https://drive.google.com/drive/folders/1vrAwwu8oh0wYj4T0jbm1B18oC1Q6jQS5?usp=sharing">here</a>.</li>
+                    <ol type="a">
+                        <li>These files are required for the Similarity Extractor to use the MDX23C algorithm.</li>
+                    </ol>
+                <li>Once downloaded, place the files in the folder you created.</li>
+                    <ol type="a">
+                        <li>This will allow the Similarity Extractor to access the model and config files.</li>
+                    </ol>
+                <li>Open the Similarity Extractor GUI.</li>
+                <li>Click on the "⚙Options⚙" tab in the top menu.</li>
+                <li>Click the button labeled "Select Model Directory" and select the folder you created in step 4.</li>
+                    <ol type="a">
+                        <li>If you have already set up the Bertom Phantom Centre, you can skip this step.</li>
+                        <li>This will set the model directory for the Similarity Extractor.</li>
+                        <li>This folder will be used to store the models for all the algorithms.</li>
+                        <li>Once you have selected the folder, the label above the button will change to show the selected folder.</li>
+                        <li>If you do not see the label change, try clicking the button again.</li>
+                    </ol>
+                <li>Your model directory is now set up.</li>
+                <li>Click on the button labelled "ZFTurbo Inference Script path" and navigate to the folder you unzipped the ZFTurbo repository to.</li>
+                    <ol type="a">
+                        <li>Once you are there click on the "inference.py" file and click open.</li>
+                        <li>This will set the inference script path for the Similarity Extractor.</li>
+                        <li>This is required for the Similarity Extractor to use the MDX23C algorithm.</li>
+                    </ol>
+                <li>Your ZFTurbo inference script path is now set up.</li>
+                    <ol type="a">
+                        <li>It will have been saved to the config file in the Similarity Extractor folder.</li>
+                        <li>You can change this at any time by clicking the "ZFTurbo Inference Script path" button again.</li>
+                    </ol>
+                <li>You can now use the Similarity Extractor with the MDX23C algorithm.</li>
+            </ol>
+            <br>
+            <!--VR V6.0.0 beta 4 -->
+            <h2> <u>Algorithm 3: VR V6.0.0b4</u> </h2>
+            <ol>
+                <li>Download and install the VR V6.0.0b4 repository <a href="https://github.com/tsurumeso/vocal-remover/tree/v6.0.0b4">here</a>.</li>
+                    <ol type="a">
+                        <li>Once downloaded, unzip the file to your desired location.</li>
+                        <li>It is recommended to unzip it to the same location as the Similarity Extractor.</li>
+                        <li>This will make it easier to find the files later.</li>
+                        <li>Once unzipped, open a terminal and navigate to the unzipped folder.</li>
+                        <ol type="i">
+                            <li>Use the <code>cd</code> command to change directories. For example, if you unzipped it to your Desktop, type:</li>
+                                <ol type="i">
+                                    <li>For Windows: <code>cd Desktop\VR V6.0.0b4</code></li>
+                                    <li>For Mac/Linux: <code>cd ~/Desktop/VR V6.0.0b4</code></li>
+                                </ol>
+                            <li>Press Enter.</li>
+                        </ol>
+                    </ol>
+                <li>Install the required dependencies by running the following command:</li>
+                    <ol type="a">
+                        <li><code>pip install -r requirements.txt</code></li>
+                        <li>This will install all the necessary libraries for the repository to function properly.</li>
+                    </ol>
+                <li>Once the installation is complete, you can verify the installation by running the following command:</li>
+                    <ol type="a">
+                        <li><code>python inference.py -h</code></li>
+                        <li>This will show you the available options for the repository.</li>
+                        <li>If you see the options, the installation was successful.</li>
+                    </ol>
+                <li>Create a folder ideally in the Similarity Extractor folder.</li>
+                    <ol type="a">
+                        <li>If you have already created a folder for any other algorithm skip to step 5.</li>
+                        <li>It is recommended to name this folder "models" as it will be used to store the models for the Similarity Extractor.</li>
+                    </ol>
+                <li>Download the VR V6.0.0b4 model files <a href="https://drive.google.com/drive/folders/1NgLh1Z_AFUTL0kW8xoQ_ZJp7UszX3lFS?usp=sharing">here</a>.</li>
+                    <ol type="a">
+                        <li>These files are required for the Similarity Extractor to use the VR V6.0.0b4 algorithm.</li>
+                    </ol>
+                <li>Once downloaded, place the files in the folder you created.</li>
+                    <ol type="a">
+                        <li>This will allow the Similarity Extractor to access the model files.</li>
+                    </ol>
+                <li>Open the Similarity Extractor GUI.</li>
+                <li>Click on the "⚙Options⚙" tab in the top menu.</li>
+                <li>Click the button labeled "Select Model Directory" and select the folder you created in step 4.</li>
+                    <ol type="a">
+                        <li>If you have already set up any other algorithm, you can skip this step.</li>
+                        <li>This will set the model directory for the Similarity Extractor.</li>
+                        <li>This folder will be used to store the models for all the algorithms.</li>
+                        <li>Once you have selected the folder, the label above the button will change to show the selected folder.</li>
+                        <li>If you do not see the label change, try clicking the button again.</li>
+                    </ol>
+                <li>Your model directory is now set up.</li>
+                <li>Click on the button labelled "VR v6.0.0b4 Inference Script path" and navigate to the folder you unzipped the VR V6.0.0b4 repository to.</li>
+                    <ol type="a">
+                        <li>Once you are there click on the "inference.py" file and click open.</li>
+                        <li>This will set the inference script path for the Similarity Extractor.</li>
+                        <li>This is required for the Similarity Extractor to use the VR V6.0.0b4 algorithm.</li>
+                    </ol>
+                <li>Your VR V6.0.0b4 inference script path is now set up.</li>
+                    <ol type="a">
+                        <li>It will have been saved to the config file in the Similarity Extractor folder.</li>
+                        <li>You can change this at any time by clicking the "VR V6.0.0b4 Inference Script path" button again.</li>
+                    </ol>
+                <li>You can now use the Similarity Extractor with the VR V6.0.0b4 algorithm.</li>
+            </ol>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Dry Paint Dealer Undr</p>
+    </footer>
+</body>
+</html>

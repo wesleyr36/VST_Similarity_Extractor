@@ -1,0 +1,78 @@
+body {
+    color: white;
+    background-color: black;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    text-align: center;
+    padding: 47px;
+    background-color: #1b1b1b;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; /* Center all content horizontally */
+    position: relative; /* Allow absolute positioning of the home icon */
+}
+header h1 {
+    margin: 0;
+    position: absolute; /* Position the h1 absolutely */
+    left: 50%; /* Move it to the center */
+    transform: translateX(-50%); /* Adjust for its width */
+}
+header a {
+    position: absolute; /* Position the home icon absolutely */
+    left: 10px; /* Adjust the position of the home icon */
+    top: 50%; /* Center it vertically */
+    transform: translateY(-50%);
+}
+header a:hover {
+    background-color: #444;
+}
+main {
+    text-align: center;
+    padding: 10px;
+    padding-bottom: 170px; /* Add padding to prevent overlap with the footer */
+}
+a {
+    color: #5975ff
+}
+.installation-steps {
+    text-align: justify;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #131313;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+}
+.installation-steps h2 {
+    color: #f9b567;
+    margin: 5px 0;
+}
+.installation-steps li {
+    margin: 2px 0;
+    padding: 1px;
+}
+.installation-steps ol {
+    padding-bottom: 7px;
+}
+.installation-steps ol[type="i"] {
+    padding-bottom: 0px;
+}
+.installation-steps code {
+    background-color: #333;
+    color: #ec7e00;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+footer {
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #1b1b1b;
+}

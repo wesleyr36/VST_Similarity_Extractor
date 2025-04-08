@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Similarity Extractor Installation Guide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="../Help_Guide.html">
+            <img src="home-icon.png" alt="Home" style="width:50px;height:47px;">
+        </a>
+        <h1>Audio Preparationn Guide</h1> 
+    </header>
+    <main>
+        <h2>Audio Preparation Guide</h2>
+        <p>This guide will help you prepare your audio files for analysis using the Similarity Extractor program.
+            <br>It will ensure all your audio sources are properly aligned before proceeding with the analysis.</p>
+        <div class="installation-steps">
+            <!-- Audio Prepation -->
+            <h2> <u>Audio Preparation</u></h2>
+            <ol>
+                <li>Open up your DAW (Digital Audio Workstation) of choice.</li>
+                    <ol type="a">
+                        <li>I personally use Audacity and all screenshots will be from Audacity.</li>
+                        <li>However, you can use any DAW of your choice.</li>
+                    </ol>
+                <li>Import all your audio files into the DAW.</li>
+                <ol type="a">
+                    <li>Now it's time to align your audio files.</li>
+                </ol>
+                <li>If your audio files are very unaligned you may want to use the spectrogram view to help you align them.</li>
+                    <ol type="a">
+                        <li>This will make it easier to see patterns in the audio files.</li>
+                        <li>Spectrograms have a lower time resolution than waveforms, so you should the waveform view for the final alignment.</li>
+                    </ol>
+                    <img src="audacity-very_unalignedpng.png" alt="Very Unaligned Example" style="width:488px;height:710px;">
+                <li>Once your audio files are roughly aligned, you can zoom in to the waveform view.</li>
+                    <ol type="a">
+                        <li>It is recommended to choose a point in the audio file that is easy to identify and zoom in on that point.</li>
+                        <li>For example, a drum hit or any other distinct sound that is easy to visually identify.</li>
+                        <li>This sound should be present in both audio files.</li>
+                        <li>To zoom in, you can use the zoom tool in your DAW or use the keyboard shortcuts.</li>
+                            <ol type="i">
+                                <li>For Audacity: Press <code>Ctrl + 1</code> to zoom in and <code>Ctrl + 3</code> to zoom out.</li>
+                                <li>Or you can press the zoom tool icon in the toolbar.</li>
+                                <li>For other DAWs, refer to the documentation for the zoom shortcuts.</li>
+                            </ol>
+                        <li>Make sure to zoom in as much as possible to see the waveform clearly.</li>
+                    </ol>
+                <li>Once you have zoomed in on a point in the audio file that is easy to identify, you can start aligning the audio files.</li>
+                    <ol type="a">
+                        <li>To align the audio files, look for the point you identified in the previous step in the other audio file.</li>
+                        <li>Once you have found the point, move the audio file to align it with the same point in the initial audio file.</li>
+                        <li>To move the audio file, you can use the move tool in your DAW or use the keyboard shortcuts.</li>
+                            <ol type="i">
+                                <li>For Audacity: Press <code>F1</code> to select the move tool and then click and drag the audio file to move it.</li>
+                                <li>For other DAWs, refer to the documentation for the move tool shortcuts.</li>
+                            </ol>
+                        <img src="audacity-alginment_example.gif" alt="Audacity Alignment" style="width:720px;height:710px;">
+                        <li>It is recommended to align the audio files to the nearest sample.</li>
+                        <li>This will ensure that the audio files are aligned as closely as possible.</li>
+                        <li>It is also recommended to check the alignment at multiple points in the audio file.</li>
+                            <ol type="i">
+                                <li>This will ensure that the audio files are aligned throughout the entire audio file.</li>
+                                <li>To check the alignment, you can use the zoom tool to zoom in on different points in the audio file.</li>
+                                <li>If you find any points that are not aligned, you can move the audio file to align it.</li>
+                                <li>If this causes other points to be unaligned, you may not be able to use the Similarity Extractor on this audio file.</li>
+                            </ol>
+                    </ol>
+                <li>Once you have aligned the audio files, you can export them as multiple audio files.</li>
+                    <ol type="a">
+                        <li>To export the audio files, you can use the export tool in your DAW or use the keyboard shortcuts.</li>
+                        <li>For Audacity: click on File > Export Audio</li>
+                            <ol type="i">
+                                <li>In the export window, select the format you want to export the audio files as.</li>
+                                <li>It is recommended to use WAV or FLAC format for the best quality.</li>
+                                <li>Make sure to select the option to export all tracks as separate files.</li>
+                                <li>Click on Export and wait for the export to finish.</li>
+                            </ol>
+                            <img src="audacity-export.png" alt="Audacity Export" style="width:630px;height:710px;">
+                        <li>For other DAWs, refer to the documentation for the export tool.</li>
+                        <li>Once the export is finished, you can close the DAW.</li>
+                    </ol>
+                <li>Now you can open the Similarity Extractor and load the audio files.</li>
+            </ol>
+            <br>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Dry Paint Dealer Undr</p>
+    </footer>
+</body>
+</html>
