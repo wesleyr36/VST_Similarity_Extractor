@@ -6,6 +6,7 @@ import os
 import random as rdm
 from libs.similarity_tasks import *
 import json
+import subprocess
 
 svd_set = json.load(open("settings.json"))
 
@@ -151,7 +152,7 @@ def sel_file(win, label, file, folder = False):
             #check if it's actually a python script
             if fname.endswith(".py"):
                 #if it's a python script, check it's the correct one
-                response = os.system(f'python {fname} --help') #run the inference script
+                response = subprocess.check_output(f'python {fname} --help') #run the inference script
                 #check if the response is the expected one
                 if expected_zf_turbo_response in response:
                     print("ZFTurbo inference script detected.")
@@ -172,7 +173,7 @@ def sel_file(win, label, file, folder = False):
             #check if it's actually a python script
             if fname.endswith(".py"):
                 #if it's a python script, check it's the correct one
-                response = os.system(f'python {fname}')
+                response = subprocess.check_output(f'python {fname}')
                 if expected_vr_v6_response in response:
                     print("VR V6.0.0b4 inference script detected.")
                     svd_set["settings"]["VR_infer"] = fname #set the path for ZFTurbo's inference script
