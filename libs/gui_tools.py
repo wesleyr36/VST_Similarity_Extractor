@@ -112,15 +112,9 @@ def create_drop_down(win, text_align, set_text, style, size_xy, xy, tool_tip=Non
 
     return drop_down #return dropdown selection
 
-expected_vr_v6_response = """usage: inference.py [-h] [--gpu GPU] [--pretrained_model PRETRAINED_MODEL] --input INPUT [--sr SR] [--n_fft N_FFT]
-                    [--hop_length HOP_LENGTH] [--batchsize BATCHSIZE] [--cropsize CROPSIZE] [--output_image] [--tta]
-                    [--output_dir OUTPUT_DIR] [--complex]"""
+expected_vr_v6_response = "[--pretrained_model PRETRAINED_MODEL]"
 
-expected_zf_turbo_response = """usage: inference.py [-h] [--model_type MODEL_TYPE] [--config_path CONFIG_PATH] [--start_check_point START_CHECK_POINT]
-                    [--input_folder INPUT_FOLDER] [--store_dir STORE_DIR] [--draw_spectro DRAW_SPECTRO]
-                    [--device_ids DEVICE_IDS [DEVICE_IDS ...]] [--extract_instrumental] [--disable_detailed_pbar]
-                    [--force_cpu] [--flac_file] [--pcm_type {PCM_16,PCM_24}] [--use_tta]
-                    [--lora_checkpoint LORA_CHECKPOINT]"""
+expected_zf_turbo_response = "[--model_type MODEL_TYPE]"
 
 def sel_file(win, label, file, folder = False):
     global file_1, file_2, ZF_infer, VR_infer, model_dir, store_dir
@@ -154,6 +148,7 @@ def sel_file(win, label, file, folder = False):
                 #if it's a python script, check it's the correct one
                 response = subprocess.check_output(f'python {fname} --help', shell=True, text=True) #run the inference script
                 #check if the response is the expected one
+                print(response)
                 if expected_zf_turbo_response in response:
                     print("ZFTurbo inference script detected.")
                     svd_set["settings"]["ZF_infer"] = fname #set the path for ZFTurbo's inference script
@@ -162,7 +157,7 @@ def sel_file(win, label, file, folder = False):
                                           f"Error: {fname} is not a valid inference script.",
                                           f"Please select a valid inference script.",
                                           QMessageBox.Ok)
-                    print("ZFTurbo inference script detected.")
+                    print("ZFTurbo inference script not detected.")
             else:
                 alert =  QMessageBox.critical(None,
                                           f"Error: {fname} is not a valid python script.",
