@@ -121,7 +121,7 @@ def sel_file(win, label, file, folder = False):
     # Open File Dialog
     #check if we're trying to select a folder, not a file
     if folder == True:
-        fname = QFileDialog.getExistingDirectory(win, "Open Folder")[0] 
+        fname = QFileDialog.getExistingDirectory(win, "Open Folder")
         label.setText(os.path.basename(fname))
         print(fname)
         if file == "store_dir":
