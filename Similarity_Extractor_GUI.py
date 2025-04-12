@@ -256,7 +256,7 @@ def settings_func(win):
 
     #User Guide Button
     user_guide_label = create_label(win, 'Centre', "User Guide", "color : white; background-color : black", [190, 40], [350, 170])
-    user_guide = create_button(win, "Open User Guide", "color : white; background-color : grey", [190, 40], [350, 270], lambda: webbrowser.open("Help Guide.html"), None)
+    user_guide = create_button(win, "Open User Guide", "color : white; background-color : grey", [190, 40], [350, 270], lambda: webbrowser.open("Help_Guide.html"), None)
 
 def window():
     app = QApplication(sys.argv) #create app
