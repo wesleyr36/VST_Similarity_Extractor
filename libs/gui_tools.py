@@ -126,6 +126,8 @@ def sel_file(win, label, file, folder = False):
         print(fname)
         if file == "store_dir":
             store_dir = fname #set the folder in which results will be stored
+            label.setText(fname)
+            label.move(220, 170)
         elif file == "model_dir":
             model_dir = fname #set the model folder directory
             svd_set["settings"]["model_dir"] = fname #set the model folder directory in the json file

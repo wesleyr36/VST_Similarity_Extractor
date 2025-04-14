@@ -114,10 +114,14 @@ def pre_process_audio(file_input_1, file_input_2, start, post_process_mode = Fal
     except Exception as e:
         print("An error occured whilst pre-processing audio:",e)
 
-def save_audio_files(similarity_1, similarity_2, input_1_differences, input_2_differences, file_input_1, file_input_2, samplerate, output_name, post_process_mode = False):
+def save_audio_files(similarity_1, similarity_2, input_1_differences, input_2_differences, file_input_1, file_input_2, samplerate, output_name, post_process_mode = False, output_folder = None):
     try:
         #get output folder and the names of the input files, the default output folder is the same folder as input_1
-        output_folder = os.path.dirname(file_input_1)
+        output_folder = os.path.dirname(file_input_1) if output_folder is None else output_folder
+        #check if the output folder exists, if not create it
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+            print(f"Output folder {output_folder} created.")
         file_1_name = Path(file_input_1).stem # needed for the final output file names if no custom name is selected
         file_2_name = Path(file_input_2).stem # needed for the final output file names if no custom name is selected
 

@@ -177,7 +177,7 @@ def mdx23c_similarity(inputs_L, inputs_R, samplerate, ZF_infer, model_dir, model
     except Exception as e:
         print("Error in the MDX23C similarity extraction algorithm:", e)
 
-def similarity_extractor(model, file_input_1, file_input_2, difference, output_name, double, VR_infer, ZF_infer, model_dir, focus):
+def similarity_extractor(model, file_input_1, file_input_2, difference, output_name, double, VR_infer, ZF_infer, model_dir, focus, output_folder):
     try:
         start = time.time()
         #load inputs, get samplerate, pre-process audio and get the time it took to load the audio
@@ -215,7 +215,7 @@ def similarity_extractor(model, file_input_1, file_input_2, difference, output_n
             difference_2 = None
 
         #save the extracted similarites and differences, similarity_2 is passed as None as this method doesn't require it
-        save_audio_files(similarity, similarity_2, difference_1, difference_2, file_input_1, file_input_2, samplerate, output_name)
+        save_audio_files(similarity, similarity_2, difference_1, difference_2, file_input_1, file_input_2, samplerate, output_name, False, output_folder)
 
         #output the time it took to finish processing
         finished = time.time()
@@ -226,7 +226,7 @@ def similarity_extractor(model, file_input_1, file_input_2, difference, output_n
     except Exception as e:
         print("Exception during similarity extraction:", e)
 
-def run_similarity_extractor(model, input_1, input_2, difference, output_name, sim_of_dif, post_process, post_process_model,svd_set,focus="Similarity"):
+def run_similarity_extractor(model, input_1, input_2, difference, output_name, sim_of_dif, post_process, post_process_model,svd_set,focus="Similarity",output_folder=None):
     try:
         ZF_infer, VR_infer, model_dir, store_dir = svd_set["settings"]["ZF_infer"], svd_set["settings"]["VR_infer"], svd_set["settings"]["model_dir"], svd_set["settings"]["store_dir"]
         print(model_dir)
@@ -253,8 +253,10 @@ def run_similarity_extractor(model, input_1, input_2, difference, output_name, s
             try:
                 if output_name.lower() == "optional":
                     output_name = None
+                if output_folder.lower() == "output folder":
+                    output_folder = None
                 if post_process == True:
-                    difference_1, difference_2 = similarity_extractor(model, input_1, input_2, difference, output_name, sim_of_dif, VR_infer, ZF_infer, model_dir,focus)
+                    difference_1, difference_2 = similarity_extractor(model, input_1, input_2, difference, output_name, sim_of_dif, VR_infer, ZF_infer, model_dir,focus, output_folder)
 
                     #convert differences back to axis = 0 -- I hate that this is needed, I can only imagine how inefficient this is
                     difference_1 = np.stack(difference_1, axis=0)
@@ -285,10 +287,10 @@ def run_similarity_extractor(model, input_1, input_2, difference, output_name, s
                     print("sim_pp_1:", similarity_1_pp.shape, "sim_pp_2:", similarity_2_pp.shape)
 
                     #save post_processed files
-                    save_audio_files(similarity_1_pp, similarity_2_pp, difference_1_pp, difference_2_pp, input_1, input_2, samplerate, output_name, True)
+                    save_audio_files(similarity_1_pp, similarity_2_pp, difference_1_pp, difference_2_pp, input_1, input_2, samplerate, output_name, True, output_folder)
                 else:
                     #run similarity extraction with no post-processing afterwards
-                    similarity_extractor(model, input_1, input_2, difference, output_name, sim_of_dif, VR_infer, ZF_infer, model_dir, focus)
+                    similarity_extractor(model, input_1, input_2, difference, output_name, sim_of_dif, VR_infer, ZF_infer, model_dir, focus, output_folder)
 
                 done = QMessageBox.information(None,
                                           "Processing Finished",
