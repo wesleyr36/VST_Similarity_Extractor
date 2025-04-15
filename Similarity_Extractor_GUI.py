@@ -137,12 +137,16 @@ def bertom_based(win):
     input_2_sel = create_button(win, "Select Input 2", "color : white; background-color : grey", [190, 40], [350, 120], lambda:sel_file(win, input_2_path, "2"), None, file_input_selection_2_Name, file_input_selection_2_Description)
 
     #Differnce and Output Name Text Labels
-    difference_label = create_label(win, 'Centre', "Output Differences?", "color : white; background-color : black", [190, 40], [50, 170])
-    output_name_label = create_label(win, 'Centre', "Output File Name", "color : white; background-color : black", [190, 40], [350, 170])
+    difference_label = create_label(win, 'Centre', "Output Differences?", "color : white; background-color : black", [150, 40], [50, 170])
+    output_name_label = create_label(win, 'Centre', "Output File Name", "color : white; background-color : black", [150, 40], [390, 170])
     
     #Difference and Name Fields
-    difference_button = create_button(win, "False", "color : white; background-color : grey", [190, 40], [50, 220], lambda:difference_toggle(win, difference_button, difference), difference_tooltip, difference_toggle_Name, difference_toggle_Description)
-    output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [190, 40], [350, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
+    difference_button = create_button(win, "False", "color : white; background-color : grey", [150, 40], [50, 220], lambda:difference_toggle(win, difference_button, difference), difference_tooltip, difference_toggle_Name, difference_toggle_Description)
+    output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [150, 40], [390, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
+
+    #Output Folder fields
+    output_folder_path = create_label(win, 'Left', "Ouput Folder", "color : white; background-color : black", [150, 40], [250, 170])
+    output_folder_input = create_button(win, "Select Output Folder", "color : white; background-color : grey", [150, 40], [220, 220], lambda:sel_file(win, output_folder_path, "store_dir", True))
 
     #Similarity of Differences
     sim_of_dif_label = create_label(win, 'Centre', "Output Similarity of inverted Differences?\n(some similarities can be phase inverted)", "color : white; background-color : black", [290, 40], [152, 270])
@@ -173,12 +177,16 @@ def mdx23c_based(win):
     input_2_sel = create_button(win, "Select Input 2", "color : white; background-color : grey", [190, 40], [350, 120], lambda:sel_file(win, input_2_path, "2"), None, file_input_selection_2_Name, file_input_selection_2_Description)
 
     #Differnce and Output Name Text Labels
-    difference_label = create_label(win, 'Centre', "Output Differences?", "color : white; background-color : black", [190, 40], [50, 170])
-    output_name_label = create_label(win, 'Centre', "Output File Name", "color : white; background-color : black", [190, 40], [350, 170])
+    difference_label = create_label(win, 'Centre', "Output Differences?", "color : white; background-color : black", [150, 40], [50, 170])
+    output_name_label = create_label(win, 'Centre', "Output File Name", "color : white; background-color : black", [150, 40], [390, 170])
     
     #Difference and Name Fields
-    difference_button = create_button(win, "False", "color : white; background-color : grey", [190, 40], [50, 220], lambda:difference_toggle(win, difference_button, difference), difference_tooltip, difference_toggle_Name, difference_toggle_Description)
-    output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [190, 40], [350, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
+    difference_button = create_button(win, "False", "color : white; background-color : grey", [150, 40], [50, 220], lambda:difference_toggle(win, difference_button, difference), difference_tooltip, difference_toggle_Name, difference_toggle_Description)
+    output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [150, 40], [390, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
+
+    #Output Folder fields
+    output_folder_path = create_label(win, 'Left', "Ouput Folder", "color : white; background-color : black", [150, 40], [250, 170])
+    output_folder_input = create_button(win, "Select Output Folder", "color : white; background-color : grey", [150, 40], [220, 220], lambda:sel_file(win, output_folder_path, "store_dir", True))
 
     #Model Selection:
     model_sel_label = create_label(win, 'Centre', "Which model?", "color : white; background-color : black", [190, 40], [202, 270])
@@ -207,10 +215,6 @@ def vr_v6b4_based(win):
     input_1_sel = create_button(win, "Select Input 1", "color : white; background-color : grey", [190, 40], [50, 120], lambda:sel_file(win, input_1_path, "1"), None, file_input_selection_1_Name, file_input_selection_1_Description)
     input_2_sel = create_button(win, "Select Input 2", "color : white; background-color : grey", [190, 40], [350, 120], lambda:sel_file(win, input_2_path, "2"), None, file_input_selection_2_Name, file_input_selection_2_Description)
 
-    #Output Folder fields
-    output_folder_path = create_label(win, 'Left', "Ouput Folder", "color : white; background-color : black", [150, 40], [250, 170])
-    output_folder_input = create_button(win, "Select Output Folder", "color : white; background-color : grey", [150, 40], [220, 220], lambda:sel_file(win, output_folder_path, "store_dir", True))
-
     #Differnce and Output Name Text Labels
     difference_label = create_label(win, 'Centre', "Output Differences?", "color : white; background-color : black", [150, 40], [50, 170])
     output_name_label = create_label(win, 'Centre', "Output File Name", "color : white; background-color : black", [150, 40], [390, 170])
@@ -219,12 +223,16 @@ def vr_v6b4_based(win):
     difference_button = create_button(win, "False", "color : white; background-color : grey", [150, 40], [50, 220], lambda:difference_toggle(win, difference_button, difference), difference_tooltip, difference_toggle_Name, difference_toggle_Description)
     output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [150, 40], [390, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
 
+    #Output Folder fields
+    output_folder_path = create_label(win, 'Left', "Ouput Folder", "color : white; background-color : black", [150, 40], [249, 170])
+    output_folder_input = create_button(win, "Select Output Folder", "color : white; background-color : grey", [150, 40], [220, 220], lambda:sel_file(win, output_folder_path, "store_dir", True))
+
     #Model Selection
     model_sel_label = create_label(win, 'Centre', "Which model?", "color : white; background-color : black", [190, 40], [35, 270])
     model_sel_dmenu = create_drop_down(win, 'Centre', ["VR V6.0.0b4 - 2K FFT", "VR V6.0.0b4 - 4K FFT"], "color : white; background-color : grey", [150, 40], [50, 320], model_selection_tooltip, model_dropdown_Name, model_dropown_Description)
 
     #Processing focus
-    focus_label = create_label(win, 'Centre', "Model focus:", "color : white; background-color : black", [255, 40], [168, 270])
+    focus_label = create_label(win, 'Centre', "Model focus:", "color : white; background-color : black", [231, 40], [180, 270])
     focus_dmenu = create_drop_down(win, 'Centre', ["Similarity", "Differences"], "color : white; background-color : grey", [150, 40], [220, 320], focus_tooltip, model_focus_Name, model_focus_Description)
 
     #Double Processing - reusing sim_of_dif since it's not too dissimilar
