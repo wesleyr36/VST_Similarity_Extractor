@@ -145,7 +145,7 @@ def bertom_based(win):
     output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [150, 40], [390, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
 
     #Output Folder fields
-    output_folder_path = create_label(win, 'Left', "Ouput Folder", "color : white; background-color : black", [150, 40], [250, 170])
+    output_folder_path = create_label(win, 'Left', "Output Folder", "color : white; background-color : black", [150, 40], [250, 170])
     output_folder_input = create_button(win, "Select Output Folder", "color : white; background-color : grey", [150, 40], [220, 220], lambda:sel_file(win, output_folder_path, "store_dir", True))
 
     #Similarity of Differences
@@ -155,13 +155,16 @@ def bertom_based(win):
     #Post-Processing
     post_proc_label = create_label(win, 'Centre', "Apply Post-Processing?", "color : white; background-color : black", [190, 40], [202, 420])
     post_proc_togle = create_button(win, "False", "color : white; background-color : grey", [190, 40], [50, 470], lambda:post_proc_toggle(win, post_proc_togle, post_process), post_processing_tooltip, post_processing_toggle_Name, post_processing_toggle_Description)
-    post_proc_dmenu = create_drop_down(win, 'Centre', ["VR V6.0.0b4 - 2K FFT", "VR V6.0.0b4 - 4K FFT","MDX23C - 2K FFT", "MDX23C - 8K FFT"], "color : white; background-color : grey", [190, 40], [350, 470],post_processing_model_selection_tooltip ,post_processing_model_selection_Name, post_processing_model_selection_Description)
+    post_proc_dmenu = create_drop_down(win, 'Centre', ["VR V6.0.0b4 - 2K FFT", "VR V6.0.0b4 - 4K FFT","MDX23C - 2K FFT", "MDX23C - 8K FFT"], "color : white; background-color : grey", [190, 40], [350, 470],post_processing_model_selection_tooltip ,
+                                       post_processing_model_selection_Name, post_processing_model_selection_Description)
     
     #Run Similarity Extraction Button
     similarity_button = create_button(win, "Extract Similarity", "color : white; background-color : grey", [490, 40], [50, 370], lambda:run_similarity_extractor("bertom", os.getenv("SIMILARITY_EXTRACTOR_FILE_1"),
                                                                                                                                                                  os.getenv("SIMILARITY_EXTRACTOR_FILE_2"), difference, output_name_input.text(),
                                                                                                                                                                  sim_of_dif, post_process, post_proc_dmenu.currentText(),
-                                                                                                                                                                 json.load(open("settings.json"))))
+                                                                                                                                                                 json.load(open("settings.json")), 
+                                                                                                                                                                 None, 
+                                                                                                                                                                 output_folder_path.text()))
 
 def mdx23c_based(win):
     #Input Text Labels
@@ -185,22 +188,25 @@ def mdx23c_based(win):
     output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [150, 40], [390, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
 
     #Output Folder fields
-    output_folder_path = create_label(win, 'Left', "Ouput Folder", "color : white; background-color : black", [150, 40], [250, 170])
+    output_folder_path = create_label(win, 'Left', "Output Folder", "color : white; background-color : black", [150, 40], [250, 170])
     output_folder_input = create_button(win, "Select Output Folder", "color : white; background-color : grey", [150, 40], [220, 220], lambda:sel_file(win, output_folder_path, "store_dir", True))
 
     #Model Selection:
     model_sel_label = create_label(win, 'Centre', "Which model?", "color : white; background-color : black", [190, 40], [202, 270])
-    model_sel_dmenu = create_drop_down(win, 'Centre', ["MDX23C - 2K FFT", "MDX23C - 8K FFT"], "color : white; background-color : grey", [190, 40], [202, 320], model_selection_tooltip, model_dropdown_Name, model_dropown_Description)
+    model_sel_dmenu = create_drop_down(win, 'Centre', ["MDX23C - 2K FFT", "MDX23C - 8K FFT", "HTDemucs"], "color : white; background-color : grey", [190, 40], [202, 320], model_selection_tooltip, model_dropdown_Name, model_dropown_Description)
     
     #Post-Processing
     post_proc_label = create_label(win, 'Centre', "Apply Post-Processing?", "color : white; background-color : black", [190, 40], [202, 420])
     post_proc_togle = create_button(win, "False", "color : white; background-color : grey", [190, 40], [50, 470], lambda:post_proc_toggle(win, post_proc_togle, post_process), post_processing_tooltip, post_processing_toggle_Name, post_processing_toggle_Description)
-    post_proc_dmenu = create_drop_down(win, 'Centre', ["VR V6.0.0b4 - 2K FFT", "VR V6.0.0b4 - 4K FFT","MDX23C - 2K FFT", "MDX23C - 8K FFT"], "color : white; background-color : grey", [190, 40], [350, 470], post_processing_model_selection_tooltip, post_processing_model_selection_Name, post_processing_model_selection_Description)
+    post_proc_dmenu = create_drop_down(win, 'Centre', ["VR V6.0.0b4 - 2K FFT", "VR V6.0.0b4 - 4K FFT","MDX23C - 2K FFT", "MDX23C - 8K FFT"], "color : white; background-color : grey", [190, 40], [350, 470], post_processing_model_selection_tooltip, 
+                                       post_processing_model_selection_Name, post_processing_model_selection_Description)
     
     #Run Similarity Extraction Button
     similarity_button = create_button(win, "Extract Similarity", "color : white; background-color : grey", [490, 40], [50, 370], lambda:run_similarity_extractor(model_sel_dmenu.currentText(), os.getenv("SIMILARITY_EXTRACTOR_FILE_1"),
                                                                                                                                                                  os.getenv("SIMILARITY_EXTRACTOR_FILE_2"), difference, output_name_input.text(),
-                                                                                                                                                                 False, post_process, post_proc_dmenu.currentText(),json.load(open("settings.json"))))
+                                                                                                                                                                 False, post_process, post_proc_dmenu.currentText(),json.load(open("settings.json")), 
+                                                                                                                                                                 None, 
+                                                                                                                                                                 output_folder_path.text()))
 
 def vr_v6b4_based(win):
     #Input Text Labels
@@ -224,7 +230,7 @@ def vr_v6b4_based(win):
     output_name_input = create_text_entry(win, 'Centre', "Optional", "color : white; background-color : grey", [150, 40], [390, 220], output_filename_tooltip, output_filename_Name, output_filename_Description)
 
     #Output Folder fields
-    output_folder_path = create_label(win, 'Left', "Ouput Folder", "color : white; background-color : black", [150, 40], [249, 170])
+    output_folder_path = create_label(win, 'Left', "Output Folder", "color : white; background-color : black", [150, 40], [249, 170])
     output_folder_input = create_button(win, "Select Output Folder", "color : white; background-color : grey", [150, 40], [220, 220], lambda:sel_file(win, output_folder_path, "store_dir", True))
 
     #Model Selection
@@ -242,7 +248,8 @@ def vr_v6b4_based(win):
     #Post-Processing
     post_proc_label = create_label(win, 'Centre', "Apply Post-Processing?", "color : white; background-color : black", [190, 40], [202, 420])
     post_proc_togle = create_button(win, "False", "color : white; background-color : grey", [190, 40], [50, 470], lambda:post_proc_toggle(win, post_proc_togle, post_process), post_processing_tooltip, post_processing_toggle_Name, post_processing_toggle_Description)
-    post_proc_dmenu = create_drop_down(win, 'Centre', ["VR V6.0.0b4 - 2K FFT", "VR V6.0.0b4 - 4K FFT","MDX23C - 2K FFT", "MDX23C - 8K FFT"], "color : white; background-color : grey", [190, 40], [350, 470], post_processing_model_selection_tooltip, post_processing_model_selection_Name, post_processing_model_selection_Description)
+    post_proc_dmenu = create_drop_down(win, 'Centre', ["VR V6.0.0b4 - 2K FFT", "VR V6.0.0b4 - 4K FFT","MDX23C - 2K FFT", "MDX23C - 8K FFT"], "color : white; background-color : grey", [190, 40], [350, 470], post_processing_model_selection_tooltip, 
+                                       post_processing_model_selection_Name, post_processing_model_selection_Description)
     
     #Run Similarity Extraction Button
     similarity_button = create_button(win, "Extract Similarity", "color : white; background-color : grey", [490, 40], [50, 370], lambda:run_similarity_extractor(model_sel_dmenu.currentText(), os.getenv("SIMILARITY_EXTRACTOR_FILE_1"),
