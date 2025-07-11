@@ -157,8 +157,16 @@ def mdx23c_similarity(inputs_L, inputs_R, samplerate, ZF_infer, model_dir, model
         sf.write(f"{temp_dir}/temp_L.wav", inputs_L, samplerate, 'float')
         sf.write(f"{temp_dir}/temp_R.wav", inputs_R, samplerate, 'float')
 
+        print(model)
+        
+        if "HTDemucs" in model:
+            model_type = "htdemucs"
+            print("mdoel")
+        else:
+            model_type = "mdx23c"
+        
         #centre isolation
-        os.system(f'python "{ZF_infer}" --input_folder "{temp_dir}" --config_path "{model_dir}/{model}.yaml" --start_check_point "{model_dir}/{model}.ckpt" --store_dir "{temp_dir}"')
+        os.system(f'python "{ZF_infer}" --model_type {model_type} --input_folder "{temp_dir}" --config_path "{model_dir}/{model}.yaml" --start_check_point "{model_dir}/{model}.ckpt" --store_dir "{temp_dir}"')
 
         similarity_L, _ = librosa.load(f"{temp_dir}/temp_L/similarity.wav", 44100, mono=False)
         similarity_R, _ = librosa.load(f"{temp_dir}/temp_R/similarity.wav", 44100, mono=False)
@@ -188,7 +196,7 @@ def similarity_extractor(model, file_input_1, file_input_2, difference, output_n
             similarity, similarity_2 = bertom_similarity(inputs_L, inputs_R, samplerate, model_dir)
         elif "V6.0.0b4" in model:
             similarity, similarity_2 = vrv6_similarity(inputs_L, inputs_R, samplerate, focus, double, VR_infer, model_dir, model)
-        elif any(model_type in model for model_type in ["MDX23C"]):
+        elif any(model_type in model for model_type in ["MDX23C", "HTDemucs"]):
             #ZFTurbo's code is very universal, it supports quite a few models, so we can use this function for them in the future
             similarity, similarity_2 = mdx23c_similarity(inputs_L, inputs_R, samplerate, ZF_infer, model_dir, model)
         else:
