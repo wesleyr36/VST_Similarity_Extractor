@@ -78,15 +78,15 @@ def vrv6_similarity(inputs_L, inputs_R, samplerate, focus, double, VR_infer, mod
         os.system(f'python "{VR_infer}" -i "{temp_dir}/temp_R.wav" -f {n_fft} -H {hop_length} -c {crop_size} -B {batch_size} -P "{model_dir}/{model}.pth" -X -o "{temp_dir}" --gpu 0')
         print("os calls")
         if focus == "Similarity":
-            similarity_L, _ = librosa.load(f"{temp_dir}/temp_L_Vocals.wav", 44100, mono=False)
-            similarity_R, _ = librosa.load(f"{temp_dir}/temp_R_Vocals.wav", 44100, mono=False)
+            similarity_L, _ = librosa.load(f"{temp_dir}/temp_L_Vocals.wav", sr=44100, mono=False)
+            similarity_R, _ = librosa.load(f"{temp_dir}/temp_R_Vocals.wav", sr=44100, mono=False)
             duration_L = librosa.get_duration(filename=f"{temp_dir}/temp_L_Vocals.wav")
             duration_R = librosa.get_duration(filename=f"{temp_dir}/temp_R_Vocals.wav")
             if double == True:
                 os.system(f'python "{VR_infer}" -i "{temp_dir}/temp_L_Instruments.wav" -f {n_fft} -H {hop_length} -c {crop_size} -B {batch_size} -P "{model_dir}/{model}.pth" -X -o "{temp_dir}" --gpu 0')
                 os.system(f'python "{VR_infer}" -i "{temp_dir}/temp_R_Instruments.wav" -f {n_fft} -H {hop_length} -c {crop_size} -B {batch_size} -P "{model_dir}/{model}.pth" -X -o "{temp_dir}" --gpu 0')
-                similarity_L_db, _ = librosa.load(f"{temp_dir}/temp_L_Instruments_Vocals.wav", 44100, mono=False)
-                similarity_R_db, _ = librosa.load(f"{temp_dir}/temp_R_Instruments_Vocals.wav", 44100, mono=False)
+                similarity_L_db, _ = librosa.load(f"{temp_dir}/temp_L_Instruments_Vocals.wav", sr=44100, mono=False)
+                similarity_R_db, _ = librosa.load(f"{temp_dir}/temp_R_Instruments_Vocals.wav", sr=44100, mono=False)
                 
                 similarity_L = similarity_L + similarity_L_db
                 similarity_R = similarity_R + similarity_R_db
@@ -96,13 +96,13 @@ def vrv6_similarity(inputs_L, inputs_R, samplerate, focus, double, VR_infer, mod
             similarity_R, inputs_R = pad_inputs(similarity_R, inputs_R)
 
         else:
-            differences_L, _ = librosa.load(f"{temp_dir}/temp_L_Instruments.wav", 44100, mono=False)
-            differences_R, _ = librosa.load(f"{temp_dir}/temp_R_Instruments.wav", 44100, mono=False)
+            differences_L, _ = librosa.load(f"{temp_dir}/temp_L_Instruments.wav", sr=44100, mono=False)
+            differences_R, _ = librosa.load(f"{temp_dir}/temp_R_Instruments.wav", sr=44100, mono=False)
             if double == True:
                 os.system(f'python "{VR_infer}" -i "{temp_dir}/temp_L_Vocals.wav" -f {n_fft} -H {hop_length} -c {crop_size} -B {batch_size} -P "{model_dir}/{model}.pth" -X -o "{temp_dir}" --gpu 0')
                 os.system(f'python "{VR_infer}" -i "{temp_dir}/temp_R_Vocals.wav" -f {n_fft} -H {hop_length} -c {crop_size} -B {batch_size} -P "{model_dir}/{model}.pth" -X -o "{temp_dir}" --gpu 0')
-                differences_dp_L, _ = librosa.load(f"{temp_dir}/temp_L_Vocals_Instruments.wav", 44100, mono=False)
-                differences_dp_R, _ = librosa.load(f"{temp_dir}/temp_R_Vocals_Instruments.wav", 44100, mono=False)
+                differences_dp_L, _ = librosa.load(f"{temp_dir}/temp_L_Vocals_Instruments.wav", sr=44100, mono=False)
+                differences_dp_R, _ = librosa.load(f"{temp_dir}/temp_R_Vocals_Instruments.wav", sr=44100, mono=False)
 
                 print(differences_L.shape, differences_dp_L.shape, inputs_L.shape)
                 
@@ -161,21 +161,43 @@ def mdx23c_similarity(inputs_L, inputs_R, samplerate, ZF_infer, model_dir, model
         
         if "HTDemucs" in model:
             model_type = "htdemucs"
-            print("mdoel")
+        elif "SCNet" in model:
+            model_type = "scnet"
+        elif "BSRoformer" in model:
+            model_type = "bs_roformer"
         else:
             model_type = "mdx23c"
         
         #centre isolation
+        print(model_type)
         os.system(f'python "{ZF_infer}" --model_type {model_type} --input_folder "{temp_dir}" --config_path "{model_dir}/{model}.yaml" --start_check_point "{model_dir}/{model}.ckpt" --store_dir "{temp_dir}"')
 
-        similarity_L, _ = librosa.load(f"{temp_dir}/temp_L/similarity.wav", 44100, mono=False)
-        similarity_R, _ = librosa.load(f"{temp_dir}/temp_R/similarity.wav", 44100, mono=False)
+        if ("BSRoformer" in model and not "Gilliaan" in model) or model == "MDX23C - Gilliaan V1":
+            differences_L, _ = librosa.load(f"{temp_dir}/temp_L/difference.wav", sr=44100, mono=False)
+            differences_R, _ = librosa.load(f"{temp_dir}/temp_R/difference.wav", sr=44100, mono=False)
+            differences_L, inputs_L = pad_inputs(differences_L, inputs_L)
+            differences_R, inputs_R = pad_inputs(differences_R, inputs_R)
+            similarity_L = inputs_L - differences_L
+            similarity_R = inputs_R - differences_R
+        else:
+            similarity_L, _ = librosa.load(f"{temp_dir}/temp_L/similarity.wav", sr=44100, mono=False)
+            similarity_R, _ = librosa.load(f"{temp_dir}/temp_R/similarity.wav", sr=44100, mono=False)
 
         #remove temp files
         os.remove(f"{temp_dir}/temp_L.wav")
         os.remove(f"{temp_dir}/temp_R.wav")
-        os.remove(f"{temp_dir}/temp_L/similarity.wav")
-        os.remove(f"{temp_dir}/temp_R/similarity.wav")
+        if ("BSRoformer" in model and not "Gilliaan" in model) or model == "MDX23C - Gilliaan V1":
+            os.remove(f"{temp_dir}/temp_L/difference.wav")
+            os.remove(f"{temp_dir}/temp_R/difference.wav")
+        elif "Gilliaan" in model and (not "BSRoformer" in model and model != "MDX23C - Gilliaan V1"):
+            os.remove(f"{temp_dir}/temp_L/difference.wav")
+            os.remove(f"{temp_dir}/temp_R/difference.wav")
+            os.remove(f"{temp_dir}/temp_L/similarity.wav")
+            os.remove(f"{temp_dir}/temp_R/similarity.wav")
+            
+        else:
+            os.remove(f"{temp_dir}/temp_L/similarity.wav")
+            os.remove(f"{temp_dir}/temp_R/similarity.wav")
 
         #finalise similarities - the AI models may have different similarities
         similarity_1 = np.stack([similarity_L[0], similarity_R[0]], axis=0)
@@ -196,7 +218,7 @@ def similarity_extractor(model, file_input_1, file_input_2, difference, output_n
             similarity, similarity_2 = bertom_similarity(inputs_L, inputs_R, samplerate, model_dir)
         elif "V6.0.0b4" in model:
             similarity, similarity_2 = vrv6_similarity(inputs_L, inputs_R, samplerate, focus, double, VR_infer, model_dir, model)
-        elif any(model_type in model for model_type in ["MDX23C", "HTDemucs"]):
+        elif any(model_type in model for model_type in ["MDX23C", "HTDemucs", "BSRoformer", "SCNet"]):
             #ZFTurbo's code is very universal, it supports quite a few models, so we can use this function for them in the future
             similarity, similarity_2 = mdx23c_similarity(inputs_L, inputs_R, samplerate, ZF_infer, model_dir, model)
         else:
