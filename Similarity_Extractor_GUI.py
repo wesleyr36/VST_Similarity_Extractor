@@ -193,7 +193,7 @@ def mdx23c_based(win):
 
     #Model Selection:
     model_sel_label = create_label(win, 'Centre', "Which model?", "color : white; background-color : black", [190, 40], [202, 270])
-    model_sel_dmenu = create_drop_down(win, 'Centre', ["MDX23C - 2K FFT", "MDX23C - 8K FFT", "HTDemucs"], "color : white; background-color : grey", [190, 40], [202, 320], model_selection_tooltip, model_dropdown_Name, model_dropown_Description)
+    model_sel_dmenu = create_drop_down(win, 'Centre', ["MDX23C - 2K FFT", "MDX23C - 8K FFT", "HTDemucs", "BSRoformer", "MDX23C - Gilliaan V1", "MDX23C - Gilliaan V2", "BSRoformer - Gilliaan", "SCNet - Gilliaan"], "color : white; background-color : grey", [190, 40], [202, 320], model_selection_tooltip, model_dropdown_Name, model_dropown_Description)
     
     #Post-Processing
     post_proc_label = create_label(win, 'Centre', "Apply Post-Processing?", "color : white; background-color : black", [190, 40], [202, 420])
